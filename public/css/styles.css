@@ -1,43 +1,78 @@
-.title {
+.top .title {
+    position: relative;
+    font-size: 40px;
+    font-family: 'Arial';
+}
+
+.caption {
     position: relative;
     font-size: 20px;
+    font-family: 'Arial';
+    text-align: center;
+}
+
+.year-entry-area .year {
+    position: relative;
+    top: 50px;
+    width: 375px;
+    height: 150px;
+    font-size: 150px;
+    letter-spacing: 10px;
+    border: none;
+    border-bottom-color: black;
+    border-bottom-style: dashed;
+}
+
+.year-entry-area .btn {
+    position:relative;
+    top: 40px;
+    width: 400px;
+    padding: 50px;
+}
+
+::placeholder {
+    opacity: 0.2;
+}
+
+.top {
+    width: 1000px;
+    margin: auto;
+    text-align: center;
+}
+
+.errmsg {
+    position: relative;
+    top: 100px;
+    color: red;
+    font-size: 15px;
     font-family: 'Arial';
 }
 
 .year-entry-area {
     position: relative;
     top: 50px;
-    width: 270px;
-    height: 100px;
-    font-size: 100px;
-    word-wrap: break-word;
-    display: inline-block;
-    text-overflow: clip;
-    letter-spacing: 10px;
-    border: dotted black;
-}
-::placeholder {
-    opacity: 0.2;
-}
-
-.body {
-    display: flex;
-}
-
-.btn {
-    position: relative;
-    top: 200px;
-    width: 400px;
-    padding: 100px;
-}
-
-.year {
-    position: relative;
-    top: 50px;
     font-size: 100px;
     text-align: center;
     display: inline-block;
 }
+
+.results {
+    position: relative;
+    top: 200px;
+    font-size: 20px;
+    height: 400px;
+    font-family: 'Arial';
+}
+
+.results .title {
+    position: relative;
+    top: 100px;
+}
+
+input:focus, textarea {
+    outline: none !important;
+}
+
 
 /* The default Node.js screen
 

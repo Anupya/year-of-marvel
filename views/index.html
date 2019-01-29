@@ -13,14 +13,27 @@
 
 </head>
 
-<body>
-    <div class="title">Year of Marvel</div>
-    <div class="year">
-        <form action="year-entered">
-            <input class="year-entry-area" maxlength="4" type="text" placeholder="1947">
-            <input class='btn' type="submit" value='Search'/>
-          </form>
+<body onLoad="document.getElementById('year').focus();">
+    <div class="top">
+        <div class="title">Year of Marvel</div><br>
+        <div class="caption">Enter a year from 1947 to now to see which Marvel comics were released that year! </div>
+
+        <div class="year-entry-area">
+            <form action="year-entered">
+                <input class="year" id="year" name="year" maxlength="4" type="text" placeholder="1947"><br>
+                <input class='btn' type="submit" value='Search'/>
+              </form>
+        </div>
+        
     </div>
+
+    <a href="#results"></a>
+
+    <div class="results">
+        <div class="comic"></div>
+        <div class="comic"></div>
+    </div>
+
 </body>
 
 
