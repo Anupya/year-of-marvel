@@ -2,8 +2,13 @@
     position: relative;
     font-size: 40px;
     font-family: 'Arial';
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+.top {
+    height: 400px;
+}
 .caption {
     position: relative;
     font-size: 20px;
@@ -14,7 +19,7 @@
 .year-entry-area .year {
     position: relative;
     top: 50px;
-    width: 375px;
+    width: 370px;
     height: 150px;
     font-size: 150px;
     letter-spacing: 10px;
@@ -34,8 +39,10 @@
     opacity: 0.2;
 }
 
-.top {
-    width: 1000px;
+.top, .results {
+    position: relative;
+    top: 100px;
+    width: 1200px;
     margin: auto;
     text-align: center;
 }
@@ -73,6 +80,14 @@ input:focus, textarea {
     outline: none !important;
 }
 
+#hit {
+    position: relative;
+    display: inline-block;
+    top: 20px;
+    padding: 30px;
+    width: 145px;
+    height: 212.5px;
+}
 
 /* The default Node.js screen
 

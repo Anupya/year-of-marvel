@@ -21,9 +21,6 @@ var path = require('path');
 // generates MD5
 var md5 = require('md5');
 
-// download comic book covers and store to directory
-var download = require('image-downloader');
-
 // empty directory everytime
 var rimraf = require('rimraf');
 
@@ -87,67 +84,58 @@ app.get('/year-entered', function(req, res) {
         var md5hash = md5(md5base);
         var apiURL = "http://gateway.marvel.com/v1/public/comics?dateRange=" 
         + year + "-01-01%2C" + year + "-12-31&ts=" + timestamp 
-        + "&apikey=" + publicKey + "&hash=" + md5hash;
-
-        console.log(apiURL);
+        + "&limit=" + 100 + "&apikey=" + publicKey + "&hash=" + md5hash;
 
         // check if year is within Marvel's range
         if ((year >= 1947) && (year <= (new Date()).getFullYear())) {
 
-            // clear img directory
-            var destpath = __dirname + '/public/img/photo*';
-            rimraf(destpath, function() { console.log('done'); });
-
+            // get JSON object from apiURL
             $.getJSON(apiURL, function(result) {
+
+                console.log(result);
+
+                // store in hits.json
+                var filepath = __dirname + '/hits.json';
+                fs.writeFileSync(filepath, JSON.stringify(result.data, undefined, 2));
 
                 // number of comics in this search
                 var hits = result.data.count;
 
-                // show each comic's thumbnail on screen
+                // contains all comic cover URLs in our hits
+                var comicCovers = [];
+
+                // contains all comic titles in our hits
+                var comicTitles = [];
+
+                // contains all the comic URLs in our hits
+                var comicURLs = [];
+
+                // store each comic's cover URLs in an array
                 for (comic = 0; comic < hits; comic++) {
                     
+                    var imageURL = result.data.results[comic].thumbnail.path + "." +
+                                    result.data.results[comic].thumbnail.extension;
+
                     // if image not available
                     if (result.data.results[comic].thumbnail.path == 
                         "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") {
 
-                        // show noimage.jpg
+                        var imageURL = "https://www.unesale.com/ProductImages/Large/notfound.png"
 
-                    }
-
-                    // if image is available
-                    else {
-                        var imageURL = result.data.results[comic].thumbnail.path + "." +
-                                    result.data.results[comic].thumbnail.extension;
-
-                        var destpath = __dirname + '/public/img/photo' + comic + '.jpg';
-
-                        var options = {
-                            url: imageURL,
-                            dest: destpath
-                        }
-
-                        // save image locally
-                        download.image(options).then(({ filename, image}) =>
-                        {
-                            console.log('File saved to', filename);
-
-                        })
-                        .catch ((err) => {
-                            console.error(err);
-                        })
                     }
                     
+                    // add the comic cover URLs to array
+                    comicCovers.push(imageURL);
+                    comicTitles.push(result.data.results[comic].title);
+                    comicURLs.push(result.data.results[comic].urls[0].url);
 
-                    /*
-                    var img = new Image();
-                    var div = document.getElementById('results');
-                       
-                    img.onload = function() {
-                      div.innerHTML += '<img src="'+ imageURL +'" />'; 
-                     
-                    };
-                    */
                 }
+
+                res.render(__dirname + '/views/index.html', {
+                       comicCovers: comicCovers,
+                       comicTitles: comicTitles,
+                       comicURLs: comicURLs
+                });
 
                 //result.data.results 
                 //console.log(result.data.results);

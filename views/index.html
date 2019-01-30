@@ -1,38 +1,51 @@
-<!-- 
-
-  Restrict years from 1947-present
-
--->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head> 
     <meta charset="utf-8">
     <link href="css/styles.css" rel="stylesheet">
+    <script src="jquery-3.3.1.min.js"></script>
 
 </head>
 
 <body onLoad="document.getElementById('year').focus();">
+
     <div class="top">
         <div class="title">Year of Marvel</div><br>
-        <div class="caption">Enter a year from 1947 to now to see which Marvel comics were released that year! </div>
+        <div class="caption">Access upto 100 Marvel comics released in a particular year. Uses Marvel API.</div>
 
         <div class="year-entry-area">
             <form action="year-entered">
                 <input class="year" id="year" name="year" maxlength="4" type="text" placeholder="1947"><br>
-                <input class='btn' type="submit" value='Search'/>
-              </form>
+            </form>
         </div>
         
     </div>
 
-    <a href="#results"></a>
-
     <div class="results" id="results">
-        <div class="comic"></div>
-        <div class="comic"></div>
+
+        <!-- display all the comics -->
+        <div id="comics" name="comics">
+            {{#each comicCovers}}
+                <img id="hit" src={{this}}>
+
+            {{/each}}
+
+        </div>
+
     </div>
+
+    <!--
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#year").keypress(function (keyCode) {
+            if (keyCode.which == 13) {
+                $("#results").toggle();
+            }
+        });
+    });
+    </script>
+    -->
 
 </body>
 
