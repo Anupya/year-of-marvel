@@ -89,7 +89,46 @@ app.get('/year-entered', function(req, res) {
             var request = new XMLHttpRequest();
             request.open('GET', apiURL, true);
 
+            request.send();
+
+            $.getJSON(apiURL, function(result) {
+
+                // number of comics in this search
+                var hits = result.data.total;
+
+                // show each comic's thumbnail on screen
+                for (comic = 0; comic < hits; comic++) {
+                    var imageURL = result.data.results[comic].thumbnail.path +
+                                    result.data.results[comic].thumbnail.extension;
+
+                    /*
+                    var img = new Image();
+                    var div = document.getElementById('results');
+                       
+                    img.onload = function() {
+                      div.innerHTML += '<img src="'+ imageURL +'" />'; 
+                     
+                    };
+                    */
+                    
+
+                    console.log(imageURL);
+                }
+
+                //result.data.results 
+                //console.log(result.data.results);
+            });
+
+
+
+            /*
             request.onload = function() {
+
+                console.log("RESPONSE");
+                console.log("-----------------------------");
+                console.log(this.responsecode);
+                console.log(this.response);
+                console.log("-----------------------------");
 
                 var data = JSON.parse(this.response);
 
@@ -102,8 +141,9 @@ app.get('/year-entered', function(req, res) {
                     console.log('error');
                 }
             }
+            */
 
-            request.send();
+            
             /*
             URL url = new URL(apiURL); 
             HttpURLConnection conn = (HttpURLConnection)url.openConnection(); 
@@ -137,12 +177,6 @@ app.get('/year-entered', function(req, res) {
             JSONArray jsonarr_1 = (JSONArray) jobj.get(“results”); 
 
             */
-            // API Call
-            res.redirect(
-                "http://gateway.marvel.com/v1/public/comics?dateRange=" +
-                year + "-01-01%2C" + year + 
-                "-12-31&ts=1&apikey=a090825504ad5c202bbe5a728a8d051d&hash=92e64523a61d250fee6c53f1fc8519e6"
-                );
 
         }
 
