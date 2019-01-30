@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
+// enables you to use jQuery to examine and transform HTML on Node.js
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const { window } = new JSDOM(`<!DOCTYPE html>`);
@@ -17,11 +18,14 @@ var hbs = require('hbs');
 // define a route to handle form post
 var path = require('path');
 
-// define XMLHttpRequest is a built-in object in web browsers
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
 // generates MD5
 var md5 = require('md5');
+
+// download comic book covers and store to directory
+var download = require('image-downloader');
+
+// empty directory everytime
+var rimraf = require('rimraf');
 
 // store responses using FileSystem
 var fs = require('fs');
@@ -37,7 +41,7 @@ var JSAlert = require("js-alert");
 app.use(bodyParser.urlencoded({extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
-app.use(express.static(path.join(__dirname, '/images')));
+app.use(express.static(path.join(__dirname, '/img')));
 app.use(express.static(path.join(__dirname, '/views')));
 
 
@@ -47,6 +51,10 @@ app.engine('html', hbs.__express);
 
 // Loads the welcome page and waits for year to be entered
 app.get('/', function(req, res) {
+
+    // clear img directory - DOES NOT WORK
+    var destpath = __dirname + '/public/img/photo*';
+    rimraf(destpath, function() { console.log('done'); });
 
     res.render(__dirname + '/views/index.html'), {
         
@@ -86,20 +94,49 @@ app.get('/year-entered', function(req, res) {
         // check if year is within Marvel's range
         if ((year >= 1947) && (year <= (new Date()).getFullYear())) {
 
-            var request = new XMLHttpRequest();
-            request.open('GET', apiURL, true);
-
-            request.send();
+            // clear img directory
+            var destpath = __dirname + '/public/img/photo*';
+            rimraf(destpath, function() { console.log('done'); });
 
             $.getJSON(apiURL, function(result) {
 
                 // number of comics in this search
-                var hits = result.data.total;
+                var hits = result.data.count;
 
                 // show each comic's thumbnail on screen
                 for (comic = 0; comic < hits; comic++) {
-                    var imageURL = result.data.results[comic].thumbnail.path +
+                    
+                    // if image not available
+                    if (result.data.results[comic].thumbnail.path == 
+                        "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") {
+
+                        // show noimage.jpg
+
+                    }
+
+                    // if image is available
+                    else {
+                        var imageURL = result.data.results[comic].thumbnail.path + "." +
                                     result.data.results[comic].thumbnail.extension;
+
+                        var destpath = __dirname + '/public/img/photo' + comic + '.jpg';
+
+                        var options = {
+                            url: imageURL,
+                            dest: destpath
+                        }
+
+                        // save image locally
+                        download.image(options).then(({ filename, image}) =>
+                        {
+                            console.log('File saved to', filename);
+
+                        })
+                        .catch ((err) => {
+                            console.error(err);
+                        })
+                    }
+                    
 
                     /*
                     var img = new Image();
@@ -110,9 +147,6 @@ app.get('/year-entered', function(req, res) {
                      
                     };
                     */
-                    
-
-                    console.log(imageURL);
                 }
 
                 //result.data.results 
@@ -186,7 +220,6 @@ app.get('/year-entered', function(req, res) {
             res.render(__dirname + '/views/index.html', {
                 
             });
-
             return;
         }
     } 
