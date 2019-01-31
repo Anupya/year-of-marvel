@@ -4,7 +4,7 @@
 <head> 
     <meta charset="utf-8">
     <link href="css/styles.css" rel="stylesheet">
-    <script src="jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 </head>
 
@@ -16,69 +16,47 @@
 
         <div class="year-entry-area">
             <form action="year-entered">
-                <input class="year" id="year" name="year" maxlength="4" type="text" placeholder="1947"><br>
+                <input class="year" id="year" autocomplete="off" name="year" maxlength="4" type="text" placeholder="1947"><br>
             </form>
         </div>
         
     </div>
 
-    <div class="results" id="results">
+    <div class="log" id="log"></div>
+    <div class="results" id="results" style="display: none;">
 
         <!-- display all the comics -->
         <div id="comics" name="comics">
             {{#each comicCovers}}
                 <img id="hit" src={{this}}>
 
+                <div class="filler">
+                    <div class="text">{{comicTitles}}</div>
+                </div>
             {{/each}}
 
         </div>
 
     </div>
 
-    <!--
     <script type="text/javascript">
-    $(document).ready(function() {
-        $("#year").keypress(function (keyCode) {
-            if (keyCode.which == 13) {
-                $("#results").toggle();
+
+        // Shows results div when a valid year is entered
+        function showDiv() {
+            document.getElementById('results').style.display = "block";
+        }
+
+        $(document).ready(function() {
+            var log = document.getElementById('log');
+
+            var search = window.location.search;
+            var year = search.slice(6);
+
+            if ((year >= 1947) && (year <= Date.now())) {
+                showDiv();
             }
         });
-    });
     </script>
-    -->
-
 </body>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- The default Node.js application 
-<head>
-    <meta charset="utf-8">
-    <title>Example app</title>
-    <meta name="description" content="" />
-    <link href="css/styles.css" rel="stylesheet">
-    <link href="css/gradients.css" rel="stylesheet">
-</head>
-
-<body class="">
-    <div class="wrapper">
-        <div class="graphics">
-            <div class="tower">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                     viewBox="-11 170 1000 429" enable-background="new -11 170 1000 429" xml:space="preserve">
-                    <path class="path" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-miterlimit="10" d="M989,595H712v-35c0,0,4.5-1.8,8-3
-
-
-                  -->
 </html>

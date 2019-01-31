@@ -1,31 +1,48 @@
+:root {
+    --MarvelRed: #ed1d24;
+}
+
+@font-face {
+  font-family: "Marvel";
+  src: url(http://www.princexml.com/fonts/larabie/kimberle.ttf) format("truetype");
+}
+
 .top .title {
     position: relative;
-    font-size: 40px;
-    font-family: 'Arial';
+    top: 50px;
+    font-size: 60px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-family: 'Impact';
+    font-weight: 400;
 }
 
 .top {
-    height: 400px;
+    height: 500px;
+    background: var(--MarvelRed);
+    border-radius: 20px;
+    
 }
-.caption {
+.top .caption {
     position: relative;
+    top: 50px;
     font-size: 20px;
-    font-family: 'Arial';
     text-align: center;
+    font-family: 'Helvetica';
 }
 
 .year-entry-area .year {
     position: relative;
-    top: 50px;
-    width: 370px;
+    background: var(--MarvelRed);
+    color: #000;
+    top: 80px;
+    width: 380px;
     height: 150px;
     font-size: 150px;
     letter-spacing: 10px;
     border: none;
     border-bottom-color: black;
-    border-bottom-style: dashed;
+    border-bottom-style: solid;
 }
 
 .year-entry-area .btn {
@@ -36,7 +53,8 @@
 }
 
 ::placeholder {
-    opacity: 0.2;
+    opacity: 0.3;
+    color: black;
 }
 
 .top, .results {
@@ -45,14 +63,6 @@
     width: 1200px;
     margin: auto;
     text-align: center;
-}
-
-.errmsg {
-    position: relative;
-    top: 100px;
-    color: red;
-    font-size: 15px;
-    font-family: 'Arial';
 }
 
 .year-entry-area {
@@ -68,7 +78,7 @@
     top: 200px;
     font-size: 20px;
     height: 400px;
-    font-family: 'Arial';
+    font-family: 'Impact';
 }
 
 .results .title {
@@ -81,12 +91,30 @@ input:focus, textarea {
 }
 
 #hit {
-    position: relative;
     display: inline-block;
     top: 20px;
     padding: 30px;
-    width: 145px;
-    height: 212.5px;
+    width: 193.33px;
+    height: 283.33px;
+}
+
+.filler {
+    display: inline-block;
+    top: 20px;
+    padding: 30px;
+    width: 193.33px;
+    height: 283.33px;
+    opacity: 1;
+    transition: 0.3s, ease;
+    background-color: var(--MarvelRed);
+}
+
+.filler .text {
+    color: white;
+    font-size: 15px;
+    top: 50%;
+    left: 50%;
+    text-align: center;
 }
 
 /* The default Node.js screen

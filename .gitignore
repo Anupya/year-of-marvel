@@ -25,3 +25,6 @@ hs_err_pid*
 # folders
 node_modules/
 img/
+
+# Json file
+/hits.json
