@@ -32,13 +32,18 @@
                 <div class="comicPicture">
                     <a href="{{url}}" target="_blank">
                         <img id="hit" src={{cover}}> 
+                        <!--<div id="overlay">
+                            <div class="mmdd">{{month}}/{{year}}</div>
+                        </div>-->
                     </a>
                 </div>
 
-                <div id="modal">
-                    <div class="title">{{title}}</div>
-                    <div class="description">{{description}}</div>
-                </div>
+                <a href="{{url}}" target="_blank">
+                    <div id="modal">
+                        <div class="title">{{title}}</div>
+                        <div class="description">{{description}}</div>
+                    </div>
+                </a>
             {{/each}}
             {{/with}}
         </div>

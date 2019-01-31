@@ -112,6 +112,8 @@ app.get('/year-entered', function(req, res) {
                     var title = result.data.results[comic].title;
                     var description = result.data.results[comic].description;
                     var url = result.data.results[comic].urls[0].url;
+                    var month = result.data.results[comic].dates[0].date.slice(5,6);
+                    var date = result.data.results[comic].dates[0].date.slice(8,9);
 
                     // if image not available
                     if (result.data.results[comic].thumbnail.path == 
@@ -131,7 +133,9 @@ app.get('/year-entered', function(req, res) {
                         cover: imageURL,
                         title: title,
                         description: description,
-                        url: url
+                        url: url,
+                        month: month,
+                        date: date
                     })
 
                 }
