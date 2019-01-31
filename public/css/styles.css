@@ -86,6 +86,7 @@ body {
     top: 200px;
     font-size: 20px;
     font-family: 'Helvetica';
+    transition: 2s, ease;
 }
 
 input:focus, textarea {
@@ -103,6 +104,38 @@ input:focus, textarea {
     float: left;
 }
 
+#modal {
+    position: relative;
+    display: inline-block;
+    top: 30px;
+    left: 75px;
+    padding: 17px;
+    width: 205px;
+    height: 300px;
+    float: left;
+    background-color: var(--MarvelRed);
+    overflow-y: scroll;
+}
+
+#modal .title {
+    position: relative;
+    color: black;
+    font-size: 22px;
+    text-align: left;
+    font-family: 'Helvetica';
+}
+
+#modal .description {
+    font-family: 'Georgia';
+    position: relative;
+    top: 20px;
+    color: white;
+    font-size: 14px;
+    text-align: left;
+    padding-bottom: 17px;
+}
+
+/*
 #overlay {
     position: absolute;
     background-color: black;
@@ -116,38 +149,7 @@ input:focus, textarea {
     font-size: 30px;
     color: white;
 }
-
-#modal {
-    position: relative;
-    display: inline-block;
-    float: left;
-    top: 30px;
-    left: 75px;
-    padding: 17px;
-    width: 205px;
-    height: 300px;
-    opacity: 1;
-    transition: 0.3s, ease;
-    background-color: var(--MarvelRed);
-    overflow-y: scroll;
-}
-
-#modal .title {
-    position: relative;
-    color: #dcd8d8;
-    font-size: 26px;
-    text-align: left;
-    font-family: 'Georgia';
-}
-
-#modal .description {
-    font-family: 'Helvetica';
-    position: relative;
-    top: 40px;
-    color: white;
-    font-size: 14px;
-    text-align: left;
-}
+*/
 
 /* SCROLLBAR -------------------------- */
 /* width */
@@ -168,3 +170,6 @@ input:focus, textarea {
     background: #dcd8d8; 
     border-radius: 10px;
 }
+
+
+

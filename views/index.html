@@ -12,7 +12,7 @@
 
     <div class="top">
         <div class="title">Year of Marvel</div><br>
-        <div class="caption">Access upto 100 Marvel comics released in a particular year. Uses Marvel API.</div>
+        <div class="caption">Enter a year and access upto 100 Marvel comics released in that year. Uses Marvel API.</div>
 
         <div class="year-entry-area">
             <form action="year-entered">
@@ -63,7 +63,7 @@
             var search = window.location.search;
             var year = search.slice(6);
 
-            if ((year >= 1947) && (year <= Date.now())) {
+            if ((year >= 1947) && (year <= (new Date()).getFullYear())) {
                 showDiv();
             }
         });
