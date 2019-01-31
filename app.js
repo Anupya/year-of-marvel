@@ -92,8 +92,6 @@ app.get('/year-entered', function(req, res) {
             // get JSON object from apiURL
             $.getJSON(apiURL, function(result) {
 
-                console.log(result);
-
                 // store in hits.json
                 var filepath = __dirname + '/hits.json';
                 fs.writeFileSync(filepath, JSON.stringify(result.data, undefined, 2));
@@ -101,20 +99,19 @@ app.get('/year-entered', function(req, res) {
                 // number of comics in this search
                 var hits = result.data.count;
 
-                // contains all comic cover URLs in our hits
-                var comicCovers = [];
-
-                // contains all comic titles in our hits
-                var comicTitles = [];
-
-                // contains all the comic URLs in our hits
-                var comicURLs = [];
+                // create structure that contains everything
+                var allComicInfo = { comics: [ ] };
 
                 // store each comic's cover URLs in an array
                 for (comic = 0; comic < hits; comic++) {
                     
+                    // store only the data we need in separate variables
                     var imageURL = result.data.results[comic].thumbnail.path + "." +
                                     result.data.results[comic].thumbnail.extension;
+
+                    var title = result.data.results[comic].title;
+                    var description = result.data.results[comic].description;
+                    var url = result.data.results[comic].urls[0].url;
 
                     // if image not available
                     if (result.data.results[comic].thumbnail.path == 
@@ -123,82 +120,30 @@ app.get('/year-entered', function(req, res) {
                         var imageURL = "https://www.unesale.com/ProductImages/Large/notfound.png"
 
                     }
-                    
-                    // add the comic cover URLs to array
-                    comicCovers.push(imageURL);
-                    comicTitles.push(result.data.results[comic].title);
-                    comicURLs.push(result.data.results[comic].urls[0].url);
+
+                    // if description not available
+                    if (description == null) {
+                        description = "No description available."
+                    }
+
+                    // add to structure
+                    allComicInfo.comics.push({
+                        cover: imageURL,
+                        title: title,
+                        description: description,
+                        url: url
+                    })
 
                 }
+
+                // store the generated structure in a separate file
+                var filepath = __dirname + 'shortlist.json';
+                fs.writeFileSync(filepath, JSON.stringify(allComicInfo, undefined, 2));
 
                 res.render(__dirname + '/views/index.html', {
-                       comicCovers: comicCovers,
-                       comicTitles: comicTitles,
-                       comicURLs: comicURLs
+                       allComicInfo: allComicInfo
                 });
-
-                //result.data.results 
-                //console.log(result.data.results);
             });
-
-
-
-            /*
-            request.onload = function() {
-
-                console.log("RESPONSE");
-                console.log("-----------------------------");
-                console.log(this.responsecode);
-                console.log(this.response);
-                console.log("-----------------------------");
-
-                var data = JSON.parse(this.response);
-
-                if (request.status >= 200 && request.status < 400) {
-                    data.forEach(results => {
-                        console.log(results.title);
-                    });
-                }
-                else {
-                    console.log('error');
-                }
-            }
-            */
-
-            
-            /*
-            URL url = new URL(apiURL); 
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection(); 
-            conn.setRequestMethod(“GET”); 
-            conn.connect(); 
-            int responsecode = conn.getResponseCode(); 
-
-            if(responsecode != 200) {
-                throw new RuntimeException(“HttpResponseCode: “ +responsecode);
-            }   
-            else
-            {
-                
-                Scanner sc = new Scanner(url.openStream());
-                while(sc.hasNext())
-                {
-                inline+=sc.nextLine();
-                }
-                System.out.println(“\nJSON data in string format”);
-                System.out.println(inline);
-                sc.close();
-            }
-
-            // Declare instance of JSON parser
-            JSONParser parse = new JSONParser();
-
-            // Convert string objects into JSON objects
-            JSONObject jobj = (JSONObject)parse.parse(inline); 
-
-            // Convert JSON object into JSONArray object
-            JSONArray jsonarr_1 = (JSONArray) jobj.get(“results”); 
-
-            */
 
         }
 
@@ -208,6 +153,7 @@ app.get('/year-entered', function(req, res) {
             res.render(__dirname + '/views/index.html', {
                 
             });
+            
             return;
         }
     } 

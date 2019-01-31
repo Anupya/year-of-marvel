@@ -27,14 +27,20 @@
 
         <!-- display all the comics -->
         <div id="comics" name="comics">
-            {{#each comicCovers}}
-                <img id="hit" src={{this}}>
+            {{#with allComicInfo}}
+            {{#each comics}}
+                <div class="comicPicture">
+                    <a href="{{url}}" target="_blank">
+                        <img id="hit" src={{cover}}> 
+                    </a>
+                </div>
 
-                <div class="filler">
-                    <div class="text">{{comicTitles}}</div>
+                <div id="modal">
+                    <div class="title">{{title}}</div>
+                    <div class="description">{{description}}</div>
                 </div>
             {{/each}}
-
+            {{/with}}
         </div>
 
     </div>
