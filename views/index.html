@@ -38,12 +38,16 @@
                     </a>
                 </div>
 
+                
                 <a href="{{url}}" target="_blank">
                     <div id="modal">
+                        
                         <div class="title">{{title}}</div>
                         <div class="description">{{description}}</div>
+                        
                     </div>
                 </a>
+            
             {{/each}}
             {{/with}}
         </div>
@@ -67,6 +71,14 @@
                 showDiv();
             }
         });
+
+        /*
+        $("#hit").mouseover(function() {
+            $("#hit").innerHTML("<p style='color: black'>Hello</p>");
+        });
+        */
+
+
     </script>
 </body>
 

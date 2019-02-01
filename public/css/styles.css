@@ -99,9 +99,14 @@ input:focus, textarea {
     top: 20px;
     left: 75px;
     padding: 30px;
-    width: 205px;
-    height: 300px;
+    width: 260px;
+    height: 380px;
     float: left;
+    box-sizing: border-box;
+}
+
+#hit:hover {
+    opacity: 0.2;
 }
 
 #modal {
@@ -110,11 +115,12 @@ input:focus, textarea {
     top: 30px;
     left: 75px;
     padding: 17px;
-    width: 205px;
-    height: 300px;
-    float: left;
+    width: 260px;
+    height: 380px;
     background-color: var(--MarvelRed);
     overflow-y: scroll;
+    float: left;
+    box-sizing: border-box;
 }
 
 #modal .title {
