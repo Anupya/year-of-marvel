@@ -10,6 +10,17 @@
 
 <body onLoad="document.getElementById('year').focus();">
 
+    <div id="bufferOverlay"></div>
+
+    <!-- About the author -->
+    <div id="mystuff">
+        <ul>
+            <li><a href="http://anupya.com/" target="_blank">About Me</a></li>
+            <li><a href="http://www.github.com/Anupya/year-of-marvel" target="_blank">Fork Me</a></li>
+        </ul>
+    </div>
+
+    <!-- Header -->
     <div class="top">
         <div class="title">Year of Marvel</div><br>
         <div class="caption">Enter a year and access upto 100 Marvel comics released in that year. Uses Marvel API.</div>
@@ -18,11 +29,13 @@
             <form action="year-entered">
                 <input class="year" id="year" autocomplete="off" name="year" maxlength="4" type="text" placeholder="1947"><br>
             </form>
+            <div id="errorMsg" style='display: none;'>Please enter a year from 1947-now.</div>
         </div>
+
         
     </div>
 
-    <div class="log" id="log"></div>
+    <!-- Results -->
     <div class="results" id="results" style="display: none;">
 
         <!-- display all the comics -->
@@ -32,9 +45,6 @@
                 <div class="comicPicture">
                     <a href="{{url}}" target="_blank">
                         <img id="hit" src={{cover}}> 
-                        <!--<div id="overlay">
-                            <div class="mmdd">{{month}}/{{year}}</div>
-                        </div>-->
                     </a>
                 </div>
 
@@ -43,6 +53,7 @@
                     <div id="modal">
                         
                         <div class="title">{{title}}</div>
+                        <div class="mmdd">Date: {{month}}/{{date}}</div>
                         <div class="description">{{description}}</div>
                         
                     </div>
@@ -67,6 +78,11 @@
             document.getElementById('results').style.display = "block";
         }
 
+        function showErrorDiv() {
+
+            document.getElementById('errorMsg').style.display = "block";
+        }
+
         $(document).ready(function() {
             var log = document.getElementById('log');
 
@@ -74,8 +90,22 @@
             var year = search.slice(6);
 
             if ((year >= 1947) && (year <= (new Date()).getFullYear())) {
+                //document.getElementById("bufferOverlay").style.display = none;
                 showDiv(year);
             }
+            else {
+                showErrorDiv();
+            }
+        });
+
+        $(document).keypress(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode == '13'){
+
+                // this part is not working
+                //document.getElementById("bufferOverlay").style.display = none; 
+            }
+
         });
 
         /*
