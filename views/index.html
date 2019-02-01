@@ -92,6 +92,7 @@
             if ((year >= 1947) && (year <= (new Date()).getFullYear())) {
                 //document.getElementById("bufferOverlay").style.display = none;
                 showDiv(year);
+                $(document).scrollTo('#results');
             }
             else {
                 showErrorDiv();

@@ -1,7 +1,6 @@
 // define our application and instantiate Express 
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser');
 
 // enables you to use jQuery to examine and transform HTML on Node.js
 const jsdom = require("jsdom");
@@ -127,9 +126,6 @@ app.get('/year-entered', function(req, res) {
                     if (description == null) {
                         description = "No description available."
                     }
-
-                    console.log("MONTH" + month);
-                    console.log("DATE" + date);
 
                     // add to structure
                     allComicInfo.comics.push({

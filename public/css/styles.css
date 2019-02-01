@@ -16,6 +16,15 @@ body {
     background-color: black;
 }
 
+#mystuff {
+    position: relative;
+    top: 20px;
+    width: 1200px;
+    height: 20px;
+    margin: auto;
+    text-align: center;
+}
+
 #mystuff ul li {
     font-size: 20px;
     font-family: 'Arial';
@@ -38,7 +47,6 @@ body {
 
 #mystuff ul {
     float: right;
-    margin-right: 100px;
 }
 
 .top .title {
@@ -51,6 +59,7 @@ body {
     letter-spacing: 1px;
     font-family: 'Oswald';
     font-weight: 400;
+
 }
 
 .top {
@@ -128,6 +137,7 @@ input:focus, textarea {
 #year-of-results {
     position: absolute;
     float: center;
+    left: 550px;
     bottom: -10px;
     font-size: 60px;
     font-weight: 100;
