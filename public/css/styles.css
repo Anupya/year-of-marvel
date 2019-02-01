@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+
 :root {
     --MarvelRed: #ed1d24;
 }
@@ -11,6 +13,7 @@
 
 body {
     overflow: auto;
+    background-color: black;
 }
 .top .title {
     position: relative;
@@ -18,7 +21,7 @@ body {
     font-size: 60px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-family: 'Impact';
+    font-family: 'Oswald';
     font-weight: 400;
 }
 
@@ -87,10 +90,21 @@ body {
     font-size: 20px;
     font-family: 'Helvetica';
     transition: 2s, ease;
+    bottom: 200px;
 }
 
 input:focus, textarea {
     outline: none !important;
+}
+
+#year-of-results {
+    position: absolute;
+    float: center;
+    bottom: -10px;
+    font-size: 60px;
+    font-weight: 100;
+    color: white;
+    font-family: 'Oswald';
 }
 
 #hit {
@@ -107,6 +121,7 @@ input:focus, textarea {
 
 #hit:hover {
     opacity: 0.2;
+    transition: 1s ease;
 }
 
 #modal {
@@ -167,13 +182,13 @@ input:focus, textarea {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 3px #dcd8d8; 
+    box-shadow: inset 0 0 3px #2d2d2d; 
     border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #dcd8d8; 
+    background: #2d2d2d; 
     border-radius: 10px;
 }
 

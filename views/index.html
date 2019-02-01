@@ -57,7 +57,13 @@
     <script type="text/javascript">
 
         // Shows results div when a valid year is entered
-        function showDiv() {
+        function showDiv(year) {
+
+            // add year div to results
+            document.getElementById('results').innerHTML += 
+            "<div id='year-of-results'>" + year + "</div>";
+
+            // show everything
             document.getElementById('results').style.display = "block";
         }
 
@@ -68,7 +74,7 @@
             var year = search.slice(6);
 
             if ((year >= 1947) && (year <= (new Date()).getFullYear())) {
-                showDiv();
+                showDiv(year);
             }
         });
 
