@@ -12,6 +12,7 @@
     "test": "mocha --recursive tests --exit"
   },
   "dependencies": {
+    "aws-cli": "0.0.2",
     "express": "^4.16.4",
     "file-api": "^0.10.4",
     "formidable": "^1.2.1",
