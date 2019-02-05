@@ -34,8 +34,8 @@ var FileReader = FileAPI.FileReader;
 
 var JSAlert = require("js-alert");
 
-app.use(bodyParser.urlencoded({extended: false }));
-app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({extended: false }));
+//app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.static(path.join(__dirname, '/img')));
 app.use(express.static(path.join(__dirname, '/views')));
@@ -118,7 +118,7 @@ app.get('/year-entered', function(req, res) {
                     if (result.data.results[comic].thumbnail.path == 
                         "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") {
 
-                        var imageURL = "https://www.unesale.com/ProductImages/Large/notfound.png"
+                        var imageURL = "http://static1.squarespace.com/static/51b3dc8ee4b051b96ceb10de/51ce6099e4b0d911b4489b79/5283aa6fe4b043b800f05a32/1384381259739/marvel-studios-releases-new-credits-logo-preview.jpg?format=1500w"
 
                     }
 

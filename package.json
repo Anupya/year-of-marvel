@@ -14,7 +14,9 @@
   "dependencies": {
     "express": "^4.16.4",
     "file-api": "^0.10.4",
+    "formidable": "^1.2.1",
     "hbs": "^4.0.1",
+    "heroku": "^7.19.4",
     "image-downloader": "^3.4.2",
     "jquery": "^3.3.1",
     "js-alert": "^1.0.4",
