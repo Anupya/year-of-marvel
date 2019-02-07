@@ -177,8 +177,13 @@ app.get('/year-entered', function(req, res) {
             });
             // calls /page=? get request
         }
-            
-    } 
+
+        else {
+            res.render(__dirname + '/views/index.html', {
+                       
+                });
+        } 
+    }
 
 })
 
