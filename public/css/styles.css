@@ -133,6 +133,13 @@ input:focus, textarea {
     outline: none !important;
 }
 
+#pages .list_pages {
+    position: relative;
+    color: white;
+    font-family: 'Arial';
+    font-size: 20px;
+}
+
 #year-of-results {
     position: absolute;
     float: center;

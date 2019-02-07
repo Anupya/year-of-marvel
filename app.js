@@ -118,8 +118,63 @@ app.get('/year-entered', function(req, res) {
 
                 console.log(apiURLarray);
 
-            });
+                // store in hits.json
+                var filepath = __dirname + '/hits' + '.json';
+                fs.writeFileSync(filepath, JSON.stringify(result.data, undefined, 2));
 
+                // number of comics in this search
+                var hits = result.data.count;
+
+                // create structure that contains everything
+                var allComicInfo = { comics: [ ] };
+
+                // store each comic's cover URLs in an array
+                for (comic = 0; comic < hits; comic++) {
+                    
+                    // store only the data we need in separate variables
+                    var imageURL = result.data.results[comic].thumbnail.path + "." +
+                                    result.data.results[comic].thumbnail.extension;
+
+                    var title = result.data.results[comic].title;
+                    var description = result.data.results[comic].description;
+                    var url = result.data.results[comic].urls[0].url;
+                    var month = result.data.results[comic].dates[0].date.slice(5,7);
+                    var date = result.data.results[comic].dates[0].date.slice(8,10);
+
+                    // if image not available
+                    if (result.data.results[comic].thumbnail.path == 
+                        "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") {
+
+                        var imageURL = "http://static1.squarespace.com/static/51b3dc8ee4b051b96ceb10de/51ce6099e4b0d911b4489b79/5283aa6fe4b043b800f05a32/1384381259739/marvel-studios-releases-new-credits-logo-preview.jpg?format=1500w"
+
+                    }
+
+                    // if description not available
+                    if (description == null) {
+                        description = "No description available."
+                    }
+
+                    // add to structure
+                    allComicInfo.comics.push({
+                        cover: imageURL,
+                        title: title,
+                        description: description,
+                        url: url,
+                        month: month,
+                        date: date,
+                    })   
+                }
+                // store the generated structure in a separate file
+                var filepath = __dirname + 'shortlist.json';
+                fs.writeFileSync(filepath, JSON.stringify(allComicInfo, undefined, 2));
+            
+                res.render(__dirname + '/views/index.html', {
+                       allComicInfo: allComicInfo,
+                       pages: apiURLarray.length,
+                       apiURLarray: apiURLarray
+                });
+
+            });
             // calls /page=? get request
         }
             
@@ -130,8 +185,11 @@ app.get('/year-entered', function(req, res) {
 app.get('/page=', function(req, res) {
 
     // get year and page from URL
-    var year;
-    var page;
+    var year = req.query.year;
+    var page = req.query.page;
+
+    console.log(year);
+    console.log(page);
 
     // calculate offset based on page
     var offset = 100*(page-1);
@@ -203,7 +261,9 @@ app.get('/page=', function(req, res) {
         fs.writeFileSync(filepath, JSON.stringify(allComicInfo, undefined, 2));
   
         res.render(__dirname + '/views/index.html', {
-               allComicInfo: allComicInfo
+               allComicInfo: allComicInfo,
+               pages: apiURLarray.length,
+               apiURLarray: apiURLarray
         });
         
     })

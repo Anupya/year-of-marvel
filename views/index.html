@@ -38,12 +38,14 @@
     <!-- Results -->
     <div class="results" id="results" style="display: none;">
 
-        <!--
         <form action="page=" id="pages" name="pages">
-            {{#each pages}}
-                <div id="page">{{page}}</div>
-        </div>
-    -->
+            <ul class="list_pages">
+                {{#each apiURLarray}}
+                    <li><a id="page" name="page" href="{{this}}">LINK</a></li>
+                {{/each}}
+            </ul>
+
+        </form>
 
         <!-- display all the comics -->
         <div id="comics" name="comics">
@@ -127,3 +129,4 @@
 </body>
 
 </html>
+
