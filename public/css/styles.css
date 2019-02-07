@@ -135,9 +135,33 @@ input:focus, textarea {
 
 #pages .list_pages {
     position: relative;
+    bottom: 60px;
     color: white;
     font-family: 'Arial';
     font-size: 20px;
+    float: right;
+}
+
+#pages ul {
+    text-decoration: none;
+    list-style-type: none;
+    margin-right: 20px;
+}
+
+#pages .list_pages li {
+    padding: 10px;
+}
+#pages .list_pages li a {
+    list-style-type: none;
+    display: inline-block;
+    text-decoration: none;
+    font: none;
+    color: inherit;
+}
+
+#pages .list_pages li a:hover {
+    color: var(--MarvelRed);
+    transition: 0.2s ease;
 }
 
 #year-of-results {
