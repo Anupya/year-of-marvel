@@ -49,7 +49,7 @@
                         <button type="submit" id="page" name="page" style="color:red;" value="{{pageNumber}}">{{pageNumber}}</button>
                     
                     {{else}}
-                        <button type="submit" id="page" name="page" style="color:white;" value="{{pageNumber}}">{{pageNumber}}</button>
+                        <button type="submit" id="page" name="page" style="color:white;" onmouseover="this.style.color='red'" onmouseout="this.style.color='white'" value="{{pageNumber}}">{{pageNumber}}</button>
 
                     {{/if}}
                     {{/each}}
