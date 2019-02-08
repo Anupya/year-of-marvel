@@ -86,7 +86,7 @@ app.get('/year-entered', function(req, res) {
 
             var apiURL = "http://gateway.marvel.com/v1/public/comics?dateRange=" 
             + year + "-01-01%2C" + year + "-12-31&ts=" + timestamp 
-            + "&limit=" + 100 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
+            + "&limit=" + 50 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
 
             // contains pageNumber and URL of each page
             var allPageInfo = { page: [ ], year };
@@ -106,14 +106,14 @@ app.get('/year-entered', function(req, res) {
                 var total = result.data.total;
                 
                 // put all apiURLs in apiurlarray
-                while (total > (offset+100)) {
+                while (total > (offset+50)) {
 
-                    offset += 100;
+                    offset += 50;
                     pageNumber += 1;
 
                     var apiURL = "http://gateway.marvel.com/v1/public/comics?dateRange=" 
                     + year + "-01-01%2C" + year + "-12-31&ts=" + timestamp 
-                    + "&limit=" + 100 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
+                    + "&limit=" + 50 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
 
                     allPageInfo.page.push({
                         pageNumber: pageNumber,
@@ -201,7 +201,7 @@ app.get('/page-changed', function(req, res) {
     var page = req.query.page;
 
     // calculate offset based on page
-    var offset = 100*(page-1);
+    var offset = 50*(page-1);
 
     // Create apiURL
     var timestamp = Date.now();
@@ -213,7 +213,7 @@ app.get('/page-changed', function(req, res) {
 
     var apiURL = "http://gateway.marvel.com/v1/public/comics?dateRange=" 
             + year + "-01-01%2C" + year + "-12-31&ts=" + timestamp 
-            + "&limit=" + 100 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
+            + "&limit=" + 50 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
 
     // contains pageNumber and URL of each page
     var allPageInfo = { page: [ ], year };
@@ -232,7 +232,7 @@ app.get('/page-changed', function(req, res) {
 
             var apiURL = "http://gateway.marvel.com/v1/public/comics?dateRange=" 
             + year + "-01-01%2C" + year + "-12-31&ts=" + timestamp 
-            + "&limit=" + 100 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
+            + "&limit=" + 50 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
 
             if (pageNumber == page) {
                 allPageInfo.page.push({
@@ -250,7 +250,7 @@ app.get('/page-changed', function(req, res) {
             }
             
 
-            offset += 100;
+            offset += 50;
             pageNumber += 1;
         }
 
@@ -263,39 +263,42 @@ app.get('/page-changed', function(req, res) {
         // store each comic's cover URLs in an array
         for (comic = 0; comic < hits; comic++) {
             
-            // store only the data we need in separate variables
-            var imageURL = result.data.results[comic].thumbnail.path + "." +
-                            result.data.results[comic].thumbnail.extension;
+            // see 2019 note above
+            if (result.data.results[comic] != undefined) {
+                
+                // store only the data we need in separate variables
+                var imageURL = result.data.results[comic].thumbnail.path + "." +
+                                result.data.results[comic].thumbnail.extension;
 
-            var title = result.data.results[comic].title;
-            var description = result.data.results[comic].description;
-            var url = result.data.results[comic].urls[0].url;
-            var month = result.data.results[comic].dates[0].date.slice(5,7);
-            var date = result.data.results[comic].dates[0].date.slice(8,10);
+                var title = result.data.results[comic].title;
+                var description = result.data.results[comic].description;
+                var url = result.data.results[comic].urls[0].url;
+                var month = result.data.results[comic].dates[0].date.slice(5,7);
+                var date = result.data.results[comic].dates[0].date.slice(8,10);
 
-            // if image not available
-            if (result.data.results[comic].thumbnail.path == 
-                "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") {
+                // if image not available
+                if (result.data.results[comic].thumbnail.path == 
+                    "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available") {
 
-                var imageURL = "http://static1.squarespace.com/static/51b3dc8ee4b051b96ceb10de/51ce6099e4b0d911b4489b79/5283aa6fe4b043b800f05a32/1384381259739/marvel-studios-releases-new-credits-logo-preview.jpg?format=1500w"
+                    var imageURL = "http://static1.squarespace.com/static/51b3dc8ee4b051b96ceb10de/51ce6099e4b0d911b4489b79/5283aa6fe4b043b800f05a32/1384381259739/marvel-studios-releases-new-credits-logo-preview.jpg?format=1500w"
 
+                }
+
+                // if description not available
+                if (description == null) {
+                    description = "No description available."
+                }
+
+                // add to structure
+                allComicInfo.comics.push({
+                    cover: imageURL,
+                    title: title,
+                    description: description,
+                    url: url,
+                    month: month,
+                    date: date,
+                })
             }
-
-            // if description not available
-            if (description == null) {
-                description = "No description available."
-            }
-
-            // add to structure
-            allComicInfo.comics.push({
-                cover: imageURL,
-                title: title,
-                description: description,
-                url: url,
-                month: month,
-                date: date,
-            })
-
         }
 
         res.render(__dirname + '/views/index.html', {

@@ -149,7 +149,7 @@ input:focus, textarea {
     
 }
 
-#pages .list_pages #form-pages button {
+#pages .list_pages #page {
     background-color: black;
     list-style-type: none;
     text-decoration: none;
@@ -159,9 +159,9 @@ input:focus, textarea {
     padding: 10px;
 }
 
-#pages .list_pages #form-pages button:hover {
-    transition: 0.2s ease;
+#pages .list_pages #page:hover {  
     color: var(--MarvelRed);
+    transition: 0.2s ease;
     cursor: pointer;
 }
 
