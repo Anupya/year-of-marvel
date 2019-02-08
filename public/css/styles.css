@@ -161,6 +161,7 @@ input:focus, textarea {
 
 #pages .list_pages #form-pages button:hover {
     transition: 0.2s ease;
+    color: var(--MarvelRed);
     cursor: pointer;
 }
 
