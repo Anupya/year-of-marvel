@@ -146,23 +146,25 @@ input:focus, textarea {
     text-decoration: none;
     list-style-type: none;
     margin-right: 5px;
+    
 }
 
-#pages .list_pages li {
+#pages .list_pages #form-pages button {
+    background-color: black;
+    list-style-type: none;
+    text-decoration: none;
+    font-size: 20px;
+    color: inherit;
+    display: block;
+    border: none;
     padding: 10px;
 }
-#pages .list_pages li a {
-    list-style-type: none;
-    display: inline-block;
-    text-decoration: none;
-    font: none;
-    color: inherit;
-}
 
-#pages .list_pages li a:hover {
+#pages .list_pages #form-pages button:hover {
     color: var(--MarvelRed);
     transition: 0.2s ease;
 }
+
 
 #year-of-results {
     position: absolute;

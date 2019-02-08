@@ -38,11 +38,19 @@
     <!-- Results -->
     <div class="results" id="results" style="display: none;">
 
-        <form action="page=" id="pages" name="pages">
+        <div id="pages" name="pages">
+            
             <ul class="list_pages">
-                {{#each apiURLarray}}
-                    <li><a id="page" name="page" href="{{this}}">LINK</a></li>
-                {{/each}}
+                <form id="form-pages" action='page-changed'>
+                {{#with allPageInfo}}  
+                <input type="hidden" name="year" value="{{year}}" />  
+                    {{#each page}}
+                    <button type="submit" name="page" value="{{pageNumber}}">{{pageNumber}}</button>
+
+                    {{/each}}
+
+                {{/with}}
+                </form>
             </ul>
 
         </form>
@@ -96,10 +104,10 @@
             var log = document.getElementById('log');
 
             var search = window.location.search;
-            var year = search.slice(6);
+            var year = search.substring(6, 10);
 
             if ((year >= 1947) && (year <= (new Date()).getFullYear())) {
-                //document.getElementById("bufferOverlay").style.display = none;
+                
                 showDiv(year);
                 $(document).scrollTo('#results');
             }

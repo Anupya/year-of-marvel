@@ -88,13 +88,19 @@ app.get('/year-entered', function(req, res) {
             var offset = 0;
             var total = 0;
 
-            var apiURLarray = [];
-
             var apiURL = "http://gateway.marvel.com/v1/public/comics?dateRange=" 
             + year + "-01-01%2C" + year + "-12-31&ts=" + timestamp 
             + "&limit=" + 100 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
 
-            apiURLarray.push(apiURL);
+            // contains pageNumber and URL of each page
+            var allPageInfo = { page: [ ], year };
+            var pageNumber = 1;
+
+            allPageInfo.year = year;
+            allPageInfo.page.push({
+                pageNumber: pageNumber, 
+                url: apiURL
+            });
 
             // get total number of results
             $.getJSON(apiURL).done(function(result) {
@@ -106,17 +112,21 @@ app.get('/year-entered', function(req, res) {
                 while (total > (offset+100)) {
 
                     offset += 100;
+                    pageNumber += 1;
+
                     var apiURL = "http://gateway.marvel.com/v1/public/comics?dateRange=" 
                     + year + "-01-01%2C" + year + "-12-31&ts=" + timestamp 
                     + "&limit=" + 100 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
-                    apiURLarray.push(apiURL);
+
+                    allPageInfo.page.push({
+                        pageNumber: pageNumber,
+                        url: apiURL
+                    });
 
                     console.log(offset);
                     console.log(total);
 
                 }
-
-                console.log(apiURLarray);
 
                 // store in hits.json
                 var filepath = __dirname + '/hits' + '.json';
@@ -164,35 +174,41 @@ app.get('/year-entered', function(req, res) {
                         date: date,
                     })   
                 }
+
+                console.log(allComicInfo.comics[0]);
+                console.log(allPageInfo.page[0]);
+
                 // store the generated structure in a separate file
                 var filepath = __dirname + 'shortlist.json';
                 fs.writeFileSync(filepath, JSON.stringify(allComicInfo, undefined, 2));
             
                 res.render(__dirname + '/views/index.html', {
                        allComicInfo: allComicInfo,
-                       pages: apiURLarray.length,
-                       apiURLarray: apiURLarray
+                       allPageInfo: allPageInfo
                 });
 
             });
-            // calls /page=? get request
         }
 
         else {
             res.render(__dirname + '/views/index.html', {
                        
-                });
+            });
         } 
     }
 
 })
 
-app.get('/page=', function(req, res) {
+// request a different page with the same year
+app.get('/page-changed', function(req, res) {
+
+    console.log("INSIDE /page-changed");
 
     // get year and page from URL
     var year = req.query.year;
     var page = req.query.page;
 
+    console.log(req.query);
     console.log(year);
     console.log(page);
 
@@ -211,11 +227,39 @@ app.get('/page=', function(req, res) {
             + year + "-01-01%2C" + year + "-12-31&ts=" + timestamp 
             + "&limit=" + 100 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
 
+    console.log(apiURL);
+
+    // contains pageNumber and URL of each page
+    var allPageInfo = { page: [ ], year };
+    
     // get JSON object from apiURL
     $.getJSON(apiURL, function(result) {
 
+        var total = result.data.total;
+        console.log(total);
+        
+        var offset = 0;
+        var pageNumber = 1;
+
+        allPageInfo.year = year;
+
+        while (total > offset) {
+
+            var apiURL = "http://gateway.marvel.com/v1/public/comics?dateRange=" 
+            + year + "-01-01%2C" + year + "-12-31&ts=" + timestamp 
+            + "&limit=" + 100 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
+
+            allPageInfo.page.push({
+                pageNumber: pageNumber,
+                url: apiURL
+            });
+
+            offset += 100;
+            pageNumber += 1;
+        }
+
         // store in hits.json
-        var filepath = __dirname + '/hits' + (offset%100) + '.json';
+        var filepath = __dirname + '/hits' + '.json';
         fs.writeFileSync(filepath, JSON.stringify(result.data, undefined, 2));
 
         // number of comics in this search
@@ -257,18 +301,21 @@ app.get('/page=', function(req, res) {
                 description: description,
                 url: url,
                 month: month,
-                date: date
-            })   
+                date: date,
+            })
+
         }
+
+        console.log("ALLCOMICINFO");
+        console.log(allComicInfo.comics[0]);
 
         // store the generated structure in a separate file
         var filepath = __dirname + 'shortlist.json';
         fs.writeFileSync(filepath, JSON.stringify(allComicInfo, undefined, 2));
-  
+    
         res.render(__dirname + '/views/index.html', {
                allComicInfo: allComicInfo,
-               pages: apiURLarray.length,
-               apiURLarray: apiURLarray
+               allPageInfo: allPageInfo
         });
         
     })
