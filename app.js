@@ -94,12 +94,14 @@ app.get('/year-entered', function(req, res) {
 
             // contains pageNumber and URL of each page
             var allPageInfo = { page: [ ], year };
+
             var pageNumber = 1;
 
             allPageInfo.year = year;
             allPageInfo.page.push({
                 pageNumber: pageNumber, 
-                url: apiURL
+                url: apiURL,
+                curPage: true
             });
 
             // get total number of results
@@ -120,7 +122,8 @@ app.get('/year-entered', function(req, res) {
 
                     allPageInfo.page.push({
                         pageNumber: pageNumber,
-                        url: apiURL
+                        url: apiURL,
+                        curPage: false
                     });
 
                     console.log(offset);
@@ -179,8 +182,8 @@ app.get('/year-entered', function(req, res) {
                 console.log(allPageInfo.page[0]);
 
                 // store the generated structure in a separate file
-                var filepath = __dirname + 'shortlist.json';
-                fs.writeFileSync(filepath, JSON.stringify(allComicInfo, undefined, 2));
+                // var filepath = __dirname + 'shortlist.json';
+                // fs.writeFileSync(filepath, JSON.stringify(allComicInfo, undefined, 2));
             
                 res.render(__dirname + '/views/index.html', {
                        allComicInfo: allComicInfo,
@@ -208,7 +211,6 @@ app.get('/page-changed', function(req, res) {
     var year = req.query.year;
     var page = req.query.page;
 
-    console.log(req.query);
     console.log(year);
     console.log(page);
 
@@ -249,18 +251,29 @@ app.get('/page-changed', function(req, res) {
             + year + "-01-01%2C" + year + "-12-31&ts=" + timestamp 
             + "&limit=" + 100 + "&offset=" + offset + "&apikey=" + publicKey + "&hash=" + md5hash;
 
-            allPageInfo.page.push({
-                pageNumber: pageNumber,
-                url: apiURL
-            });
+            if (pageNumber == page) {
+                allPageInfo.page.push({
+                    pageNumber: pageNumber,
+                    url: apiURL,
+                    curPage: true
+                });
+            }
+            else {
+                allPageInfo.page.push({
+                    pageNumber: pageNumber,
+                    url: apiURL,
+                    curPage: false
+                });
+            }
+            
 
             offset += 100;
             pageNumber += 1;
         }
 
         // store in hits.json
-        var filepath = __dirname + '/hits' + '.json';
-        fs.writeFileSync(filepath, JSON.stringify(result.data, undefined, 2));
+        // var filepath = __dirname + '/hits' + '.json';
+        // fs.writeFileSync(filepath, JSON.stringify(result.data, undefined, 2));
 
         // number of comics in this search
         var hits = result.data.count;
@@ -310,8 +323,8 @@ app.get('/page-changed', function(req, res) {
         console.log(allComicInfo.comics[0]);
 
         // store the generated structure in a separate file
-        var filepath = __dirname + 'shortlist.json';
-        fs.writeFileSync(filepath, JSON.stringify(allComicInfo, undefined, 2));
+        // var filepath = __dirname + 'shortlist.json';
+        // fs.writeFileSync(filepath, JSON.stringify(allComicInfo, undefined, 2));
     
         res.render(__dirname + '/views/index.html', {
                allComicInfo: allComicInfo,

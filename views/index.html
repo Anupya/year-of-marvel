@@ -45,8 +45,13 @@
                 {{#with allPageInfo}}  
                 <input type="hidden" name="year" value="{{year}}" />  
                     {{#each page}}
-                    <button type="submit" name="page" value="{{pageNumber}}">{{pageNumber}}</button>
+                    {{#if curPage}}
+                        <button type="submit" name="page" style="color:red;" value="{{pageNumber}}">{{pageNumber}}</button>
+                    
+                    {{else}}
+                        <button type="submit" name="page" style="color:white;" value="{{pageNumber}}">{{pageNumber}}</button>
 
+                    {{/if}}
                     {{/each}}
 
                 {{/with}}
