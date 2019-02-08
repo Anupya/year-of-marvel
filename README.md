@@ -1,6 +1,8 @@
 # Year of Marvel
 A web application built with Node.js that gives you all the Marvel comics released in a particular year.
 
+![Screenshot](https://github.com/Anupya/year-of-marvel/blob/master/screenshot_1.png)
+
 ## Uses
 
 ### 1. Gifts
@@ -17,8 +19,8 @@ I decided to nip the problem in the butt and get my information straight from Ma
 
 ## Features
 - 50 results per page
-- enter any year from 1947-now and see a quick modal for each comic
-- clickable comics to go straight to the
+- enter any year from 1947-now and browse through all (yes, ALL) the comics
+- clickable comics that allow you to buy the particular issue directly from the official Marvel website
 
 ## Last thoughts
 My mind was blown when I first discovered Marvel API and knew I wanted to work with it as soon as possible. It is a super cool API that reveals an unbelievable amount of detail - a treasure chest for comic book nerds.
@@ -27,7 +29,6 @@ My mind was blown when I first discovered Marvel API and knew I wanted to work w
 https://year-of-marvel.herokuapp.com
 
 ## Screenshots
-![Screenshot](https://github.com/Anupya/year-of-marvel/blob/master/screenshot_1.PNG)
-![Screenshot](https://github.com/Anupya/year-of-marvel/blob/master/screenshot_2.PNG)
-![Screenshot](https://github.com/Anupya/year-of-marvel/blob/master/screenshot_3.PNG)
+![Screenshot](https://github.com/Anupya/year-of-marvel/blob/master/screenshot_2.png)
+![Screenshot](https://github.com/Anupya/year-of-marvel/blob/master/screenshot_3.png)
 
