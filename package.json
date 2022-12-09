@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "aws-cli": "0.0.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "file-api": "^0.10.4",
     "formidable": "^1.2.1",
     "hbs": "^4.0.1",
